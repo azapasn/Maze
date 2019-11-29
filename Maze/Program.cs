@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Maze.Domain;
+using System;
 
 namespace Maze
 {
@@ -8,7 +9,10 @@ namespace Maze
         {
             Console.WriteLine("Hello World!");
             Console.ReadKey();
+            Map map = Map.GetMapFromFile("../../../Data/Maze.txt");
+            
 
         }
+
     }
 }

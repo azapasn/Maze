@@ -5,20 +5,21 @@ using System.IO;
 
 namespace Maze.Domain
 {
-    class Maze
+    class Map
     {
         private int[,] MapArray { get; set; }
         private Coordinates StartPoint { get; set; }
+        private Exits ExitPoints { get; set; }
 
 
-        private Maze()
+        private Map()
         {
-
+            ExitPoints = new Exits();
         }
 
-        public static Maze GetMazeFromFile(string filePath)
+        public static Map GetMapFromFile(string filePath)
         {
-            Maze newMaze = new Maze();
+            Map newMap = new Map();
             using (StreamReader reader = new StreamReader(@filePath))
             {
                 string line = reader.ReadLine();
@@ -37,14 +38,19 @@ namespace Maze.Domain
                             mapArray[j, i] = int.Parse(splittedLine[j]);
                             if (int.Parse(splittedLine[j]) == 2)
                             { 
-                                newMaze.StartPoint = new Coordinates(j, i);
+                                newMap.StartPoint = new Coordinates(j, i);
                             }
+                            if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
+                            {
+                                newMap.ExitPoints.AddExit(new Coordinates(j, i));
+                            }
+
                         }
                         line = reader.ReadLine();
                     }
                 }
-                newMaze.MapArray = mapArray;
-                return newMaze;
+                newMap.MapArray = mapArray;
+                return newMap;
             }
         }
     }
