@@ -9,6 +9,7 @@ namespace Maze
         static void Main(string[] args)
         {
             Map map = Map.GetMapFromFile(dataFile);
+            Path path = new Path(map);
             Console.ReadKey();
         }
 

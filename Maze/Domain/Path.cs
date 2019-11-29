@@ -43,19 +43,19 @@ namespace Maze.Domain
         private Coordinates FindNearestSmallestValue(int x, int y)
         {
             int currentValue = Map[x, y];
-            if (Map[x, y - 1] == currentValue - 1)
+            if (y > 0 && Map[x, y - 1] == currentValue - 1)
             {
                 return new Coordinates(x, y - 1);
             }
-            else if (Map[x, y + 1] == currentValue - 1)
+            else if (y < Map.GetLength(0) - 1 && Map[x, y + 1] == currentValue - 1)
             {
                 return new Coordinates(x, y + 1);
             }
-            else if (Map[x - 1, y] == currentValue - 1)
+            else if (x > 0 && Map[x - 1, y] == currentValue - 1)
             {
                 return new Coordinates(x - 1, y);
             }
-            else if (Map[x + 1, y] == currentValue - 1)
+            else if (x < Map.GetLength(1) - 1 && Map[x + 1, y] == currentValue - 1)
             {
                 return new Coordinates(x + 1, y);
             }
@@ -76,10 +76,11 @@ namespace Maze.Domain
                     {
                         if (CheckNeighbourhoodStepped(i,j,k))
                         {
-                            IncreaseValue(i, j, k);
+                            IncreaseValue(i, j, k + 1);
                         }
                     }
                 }
+                k++;
                 if (IsExitFound(map.ExitPoints.ExitsCoordinates))
                 {
                     pathFound = true;
@@ -101,19 +102,19 @@ namespace Maze.Domain
         private bool CheckNeighbourhoodStepped(int x, int y, int i)
         {
             bool stepped = false;
-            if (Map[x, y -1] == i)
+            if (y > 0 && Map[x, y - 1] == i)
             {
                 stepped = true;
             }
-            else if(Map[x, y + 1] == i)
+            else if(y < Map.GetLength(0) - 1 && Map[x, y + 1] == i)
             {
                 stepped = true;
             }
-            else if (Map[x - 1, y] == i)
+            else if (x > 0 && Map[x - 1, y] == i)
             {
                 stepped = true;
             }
-            else if (Map[x + 1, y] == i)
+            else if (x < Map.GetLength(1) - 1 && Map[x + 1, y] == i)
             {
                 stepped = true;
             }
@@ -130,13 +131,17 @@ namespace Maze.Domain
                 for (int j = 0; j < width; j++)
                 {
                     int value;
-                    if (map.MapArray[i, j] == 0 || map.MapArray[i, j] == 2)
+                    if (map.MapArray[i, j] == 0)
                     {
                         value = 0;
                     }
                     else if (map.MapArray[i, j] == 1)
                     {
                         value = -1;
+                    }
+                    else if (map.MapArray[i, j] == 2)
+                    {
+                        value = 1;
                     }
                     else
                     {

@@ -39,7 +39,7 @@ namespace Maze.Domain
                             { 
                                 newMap.StartPoint = new Coordinates(j, i);
                             }
-                            if (i == 0 || i == height - 1 || j == 0 || j == width - 1)
+                            if ((i == 0 || i == height - 1 || j == 0 || j == width - 1) && int.Parse(splittedLine[j]) == 0)
                             {
                                 newMap.ExitPoints.AddExit(new Coordinates(j, i));
                             }

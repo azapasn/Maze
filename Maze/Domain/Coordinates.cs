@@ -14,5 +14,13 @@ namespace Maze.Domain
             X = x;
             Y = y;
         }
+        public bool Equals(Coordinates coordinates)
+        {
+            if (coordinates.X == X && coordinates.Y == Y)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
