@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Maze.Domain
@@ -7,7 +8,7 @@ namespace Maze.Domain
     class Path
     {
         private int[,] Map { get; set; }
-        public Coordinates[] ShortestPath { get; set; }
+        public List<Coordinates> ShortestPath { get; set; }
         private Coordinates NearestExit { get; set; }
 
         public Path(Map map)
@@ -32,14 +33,19 @@ namespace Maze.Domain
             {
                 backwardPath.Add(lastCalculatedPoint);
                 lastCalculatedPoint = FindNearestSmallestValue(lastCalculatedPoint.X, lastCalculatedPoint.Y);
-                if (lastCalculatedPoint.Equals(map.StartPoint))
+                if (lastCalculatedPoint == null)
+                {
+                    calculated = true;
+                }
+                else if (lastCalculatedPoint.Equals(map.StartPoint))
                 {
                     calculated = true;
                     backwardPath.Add(map.StartPoint);
                 }
             }
-
+            ReversePath(backwardPath);
         }
+
         private Coordinates FindNearestSmallestValue(int x, int y)
         {
             int currentValue = Map[x, y];
@@ -139,18 +145,27 @@ namespace Maze.Domain
                     {
                         value = -1;
                     }
-                    else if (map.MapArray[i, j] == 2)
+                    else if ((map.MapArray[i, j] == 2) && map.StartPoint == null)
                     {
                         value = 1;
                     }
                     else
                     {
-                        value = -2;
-                        //TODO: add exception;
+                        value = 0;
                     }
                     Map[i, j] = value;
                 }
             }
+            if (map.StartPoint != null)
+            {
+                Map[map.StartPoint.X, map.StartPoint.Y] = 1;
+            }
+        }
+
+        private void ReversePath(List<Coordinates> backwardPath)
+        {
+            ShortestPath = backwardPath;
+            ShortestPath.Reverse();
         }
     }
 }
