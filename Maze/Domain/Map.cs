@@ -7,10 +7,9 @@ namespace Maze.Domain
 {
     class Map
     {
-        private int[,] MapArray { get; set; }
-        private Coordinates StartPoint { get; set; }
-        private Exits ExitPoints { get; set; }
-
+        public int[,] MapArray { get; set; }
+        public Coordinates StartPoint { get; set; }
+        public Exits ExitPoints { get; set; }
 
         private Map()
         {

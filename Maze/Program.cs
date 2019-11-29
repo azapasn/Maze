@@ -5,13 +5,11 @@ namespace Maze
 {
     class Program
     {
+        const string dataFile = "../../../Data/Maze.txt";
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Map map = Map.GetMapFromFile(dataFile);
             Console.ReadKey();
-            Map map = Map.GetMapFromFile("../../../Data/Maze.txt");
-            
-
         }
 
     }
