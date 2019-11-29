@@ -7,11 +7,14 @@ namespace Maze.Domain
     class Path
     {
         private int[,] Map { get; set; }
+        public Coordinates[] ShortestPath { get; set; }
+        private Coordinates NearestExit { get; set; }
 
         public Path(Map map)
         {
             ConvertMap(map);
             CalculatePath(map);
+            ReadPath(map);
         }
         private void IncreaseValue(int x, int y, int i)
         {
@@ -19,6 +22,47 @@ namespace Maze.Domain
             {
                 Map[x, y] = i;
             }
+        }
+        private void ReadPath(Map map)
+        {
+            List<Coordinates> backwardPath = new List<Coordinates>();
+            Coordinates lastCalculatedPoint = NearestExit;
+            bool calculated = false;
+            while (!calculated)
+            {
+                backwardPath.Add(lastCalculatedPoint);
+                lastCalculatedPoint = FindNearestSmallestValue(lastCalculatedPoint.X, lastCalculatedPoint.Y);
+                if (lastCalculatedPoint.Equals(map.StartPoint))
+                {
+                    calculated = true;
+                    backwardPath.Add(map.StartPoint);
+                }
+            }
+
+        }
+        private Coordinates FindNearestSmallestValue(int x, int y)
+        {
+            int currentValue = Map[x, y];
+            if (Map[x, y - 1] == currentValue - 1)
+            {
+                return new Coordinates(x, y - 1);
+            }
+            else if (Map[x, y + 1] == currentValue - 1)
+            {
+                return new Coordinates(x, y + 1);
+            }
+            else if (Map[x - 1, y] == currentValue - 1)
+            {
+                return new Coordinates(x - 1, y);
+            }
+            else if (Map[x + 1, y] == currentValue - 1)
+            {
+                return new Coordinates(x + 1, y);
+            }
+            // TODO exception
+            return null;
+        
+
         }
         private void CalculatePath(Map map)
         {
@@ -36,13 +80,44 @@ namespace Maze.Domain
                         }
                     }
                 }
+                if (IsExitFound(map.ExitPoints.ExitsCoordinates))
+                {
+                    pathFound = true;
+                }
             }
         }
-
+        private bool IsExitFound(List<Coordinates> exits)
+        {
+            foreach (Coordinates exit in exits)
+            {
+                if (Map[exit.X, exit.Y] != 0)
+                {
+                    NearestExit = new Coordinates(exit.X, exit.Y);
+                    return true;
+                }
+            }
+            return false;
+        }
         private bool CheckNeighbourhoodStepped(int x, int y, int i)
         {
-
-            return false;
+            bool stepped = false;
+            if (Map[x, y -1] == i)
+            {
+                stepped = true;
+            }
+            else if(Map[x, y + 1] == i)
+            {
+                stepped = true;
+            }
+            else if (Map[x - 1, y] == i)
+            {
+                stepped = true;
+            }
+            else if (Map[x + 1, y] == i)
+            {
+                stepped = true;
+            }
+            return stepped;
         }
         private void ConvertMap(Map map)
         {

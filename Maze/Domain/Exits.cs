@@ -6,7 +6,7 @@ namespace Maze.Domain
 {
     class Exits
     {
-        private List<Coordinates> ExitsCoordinates { get; set; }
+        public List<Coordinates> ExitsCoordinates { get; set; }
 
         public Exits()
         {

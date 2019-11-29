@@ -6,8 +6,8 @@ namespace Maze.Domain
 {
     class Coordinates
     {
-        private int X { get; set; }
-        private int Y { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public Coordinates(int x, int y)
         {
