@@ -87,6 +87,10 @@ namespace Maze.Domain
                     }
                 }
                 k++;
+                if (k > Map.GetLength(0) * Map.GetLength(1))
+                {
+                    throw new ArgumentException();
+                }
                 if (IsExitFound(map.ExitPoints.ExitsCoordinates))
                 {
                     pathFound = true;

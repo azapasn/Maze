@@ -15,6 +15,14 @@ namespace Maze.Domain
         {
             ExitPoints = new Exits();
         }
+        public void ChangeStartPoint(Coordinates coordinates)
+        {
+            if (MapArray[coordinates.X, coordinates.Y] == 1)
+            {
+                throw new InvalidOperationException();
+            }
+            StartPoint = coordinates;
+        }
 
         public static Map GetMapFromFile(string filePath)
         {
@@ -36,7 +44,11 @@ namespace Maze.Domain
                         {
                             mapArray[j, i] = int.Parse(splittedLine[j]);
                             if (int.Parse(splittedLine[j]) == 2)
-                            { 
+                            {
+                                if (newMap.StartPoint != null)
+                                {
+                                    throw new InvalidDataException();
+                                }
                                 newMap.StartPoint = new Coordinates(j, i);
                             }
                             if ((i == 0 || i == height - 1 || j == 0 || j == width - 1) && int.Parse(splittedLine[j]) == 0)
