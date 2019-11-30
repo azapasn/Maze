@@ -9,9 +9,9 @@ namespace Maze.Presentation
     {
         public void Display(Map map)
         {
-            for (int i = 0; i < map.MapArray.GetLength(0); i++)
+            for (int i = 0; i < map.MapArray.GetLength(1); i++)
             {
-                for (int j = 0; j < map.MapArray.GetLength(1); j++)
+                for (int j = 0; j < map.MapArray.GetLength(0); j++)
                 {
                     Console.Write(map.MapArray[j, i] + " ");
                 }

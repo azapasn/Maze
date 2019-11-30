@@ -31,10 +31,10 @@ namespace Maze.Domain
             {
                 string line = reader.ReadLine();
                 string[] values = line.Split(' ');
-                int height = int.Parse(values[0]);
-                int width = int.Parse(values[1]);
-                Console.WriteLine(height + " " + width);
-                int[,] mapArray = new int[height, width];
+                int width = int.Parse(values[0]);
+                int height = int.Parse(values[1]);
+                Console.WriteLine(width + " " + height);
+                int[,] mapArray = new int[width, height];
                 if (null != (line = reader.ReadLine()))
                 {
                     for (int i = 0; i < height; i++)

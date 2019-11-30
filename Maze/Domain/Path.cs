@@ -116,7 +116,7 @@ namespace Maze.Domain
             {
                 stepped = true;
             }
-            else if(y < Map.GetLength(0) - 1 && Map[x, y + 1] == i)
+            else if(y < Map.GetLength(1) - 1 && Map[x, y + 1] == i)
             {
                 stepped = true;
             }
@@ -124,7 +124,7 @@ namespace Maze.Domain
             {
                 stepped = true;
             }
-            else if (x < Map.GetLength(1) - 1 && Map[x + 1, y] == i)
+            else if (x < Map.GetLength(0) - 1 && Map[x + 1, y] == i)
             {
                 stepped = true;
             }
